@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Obsidian — 개인 워크스페이스 상태/캐시는 제외, 설정(테마·플러그인 목록)은 유지하고 싶다면 아래 라인을 조정하세요
+.obsidian/workspace*.json
+.obsidian/cache

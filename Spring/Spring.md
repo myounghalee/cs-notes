@@ -1,6 +1,6 @@
 #CS #Spring #면접
 
-관련: [[스프링 컨테이너]] · [[서블릿]] · [[필터와 인터셉터]] · [[Spring Batch]] · [[../Infrastructure/RESTful API|RESTful API]] · [[../Java/SOLID|SOLID]] · [[../Java/MVC|MVC]] · [[../Database/트랜잭션|트랜잭션]]
+관련: [[스프링 컨테이너]] · [[서블릿]] · [[필터와 인터셉터]] · [[Spring Batch]] · [[AOP와 빈 순환참조]] · [[JPA와 영속성 컨텍스트]] · [[../Infrastructure/RESTful API|RESTful API]] · [[../Java/SOLID|SOLID]] · [[../Java/MVC|MVC]] · [[../Database/트랜잭션|트랜잭션]]
 
 ## 목차
 - [[#Spring은 왜 쓸까?]]
@@ -122,7 +122,7 @@ class LoggingAspect {
 }
 ```
 
-이제 `OrderService`, `UserService`는 로깅 코드를 신경 쓸 필요가 전혀 없어요. Spring이 내부적으로 **프록시(Proxy) 객체**를 만들어서, 실제 메서드 호출 앞뒤에 이 로직을 자동으로 끼워 넣어줘요. `@Transactional`([[../Database/트랜잭션|트랜잭션]] 참고)도 바로 이 AOP 방식으로 동작해요 — 메서드 실행 전 트랜잭션을 시작하고, 끝나면 커밋/롤백하는 걸 자동으로 처리해줍니다.
+이제 `OrderService`, `UserService`는 로깅 코드를 신경 쓸 필요가 전혀 없어요. Spring이 내부적으로 **프록시(Proxy) 객체**를 만들어서, 실제 메서드 호출 앞뒤에 이 로직을 자동으로 끼워 넣어줘요. `@Transactional`([[../Database/트랜잭션|트랜잭션]] 참고)도 바로 이 AOP 방식으로 동작해요 — 메서드 실행 전 트랜잭션을 시작하고, 끝나면 커밋/롤백하는 걸 자동으로 처리해줍니다. 이 프록시가 정확히 어떻게 만들어지는지(JDK Dynamic Proxy vs CGLIB), 그리고 같은 클래스 내부 호출에서는 왜 AOP가 안 먹는지(Self-Invocation)는 [[AOP와 빈 순환참조]]에서 자세히 다뤄요.
 
 ---
 

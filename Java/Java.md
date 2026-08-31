@@ -45,7 +45,7 @@ graph TD
 
 - **메모리 절약**: `"hi"`처럼 따옴표로 직접 쓴 문자열은 **String Pool**이라는 특별한 저장소에 캐싱돼요. 같은 내용의 문자열을 또 만들면, 새로 만들지 않고 풀에 있는 걸 재사용해요. 만약 String이 가변이었다면, 누군가 `a`의 내용을 바꿨을 때 이걸 같이 참조하던 `b`까지 엉뚱하게 바뀌어버리는 대참사가 나겠죠. 불변이기 때문에 이런 공유(재사용)가 안전해요.
 - **스레드 안전**: 여러 스레드가 같은 String을 동시에 봐도, 아무도 값을 바꿀 수 없으니 걱정할 게 없어요.
-- **HashMap의 key로 안전**: [[Java]] 뒷부분에 나올 HashMap은 key의 `hashCode()`를 기준으로 저장 위치를 정하는데, key가 중간에 바뀌면 찾을 수 없게 돼요. String은 불변이라 이런 걱정이 없어요.
+- **HashMap의 key로 안전**: [[컬렉션]]에서 다룰 HashMap은 key의 `hashCode()`를 기준으로 저장 위치를 정하는데, key가 중간에 바뀌면 찾을 수 없게 돼요. String은 불변이라 이런 걱정이 없어요.
 
 ### 그럼 문자열을 자주 바꿔야 할 땐?
 
@@ -136,58 +136,7 @@ graph TD
     Map --> TreeMap
 ```
 
-### ArrayList vs LinkedList
-
-**비유**: `ArrayList`는 "번호가 매겨진 사물함 줄"이에요. 몇 번 사물함인지 알면 바로 찾아갈 수 있지만(빠른 조회), 중간에 사물함 하나를 새로 끼워 넣으려면 뒤에 있는 사물함 번호를 다 하나씩 밀어야 해요(느린 삽입).
-
-`LinkedList`는 "기차 칸을 서로 연결한 것"이에요. 중간에 칸 하나를 끼워 넣거나 빼는 건 앞뒤 연결만 바꾸면 되니 빠르지만(빠른 삽입/삭제), 5번째 칸을 찾으려면 처음부터 하나씩 세면서 가야 해요(느린 조회).
-
-```mermaid
-graph LR
-    subgraph ArrayList["ArrayList (배열 기반)"]
-        A0["[0]"] --- A1["[1]"] --- A2["[2]"] --- A3["[3]"]
-    end
-    subgraph LinkedList["LinkedList (연결 리스트)"]
-        L0["노드"] -->|next| L1["노드"] -->|next| L2["노드"] -->|next| L3["노드"]
-    end
-```
-
-| 구분 | ArrayList | LinkedList |
-|---|---|---|
-| 조회 (`get(i)`) | ⚡ O(1) | 🐢 O(n) |
-| 중간 삽입/삭제 | 🐢 O(n) | ⚡ O(1) (탐색 제외) |
-| 언제 쓰나 | 조회가 잦을 때 (대부분의 경우) | 삽입/삭제가 잦을 때 |
-
-### HashMap은 어떻게 그렇게 빨리 찾을까?
-
-`HashMap`은 내부적으로 **배열 + 연결리스트(또는 트리)** 구조로 되어 있어요.
-
-```mermaid
-graph LR
-    subgraph "HashMap 내부 (버킷 배열)"
-        B0["버킷 0"]
-        B1["버킷 1 → \"apple\"(key)"]
-        B2["버킷 2"]
-        B3["버킷 3 → \"banana\" → \"cherry\" (충돌!)"]
-    end
-```
-
-1. key를 넣으면 key의 `hashCode()`를 계산해서 "몇 번 버킷에 넣을지"를 정해요.
-2. 조회할 때도 마찬가지로 key의 해시값을 계산해서 **그 버킷만 바로 찾아가면 되니까** 평균적으로 매우 빠릅니다 (O(1)).
-3. 문제는 서로 다른 key인데 우연히 같은 버킷 번호가 나올 수 있다는 것 — 이걸 **해시 충돌(Collision)** 이라고 해요. 이럴 땐 같은 버킷 안에서 연결리스트로 줄줄이 이어 붙여요. (Java 8부터는 한 버킷에 8개 넘게 쌓이면 연결리스트 대신 **레드-블랙 트리**로 바꿔서, 최악의 경우에도 성능이 O(n)이 아닌 O(log n)을 보장하도록 개선됐어요.)
-
-> ⚠️ 그래서 `HashMap`의 key로 쓰는 객체는 `equals()`와 `hashCode()`를 반드시 올바르게 오버라이딩해야 해요. 안 그러면 "분명 넣었는데 못 찾는" 버그가 생겨요. (자세한 이유는 [[OOP]] 참고)
-
-### HashMap vs Hashtable vs ConcurrentHashMap
-
-| 구분 | HashMap | Hashtable | ConcurrentHashMap |
-|---|---|---|---|
-| 스레드 안전 | ❌ | ✅ (전체를 통째로 락) | ✅ (부분적으로만 락) |
-| null 허용 | key/value 모두 허용 | 둘 다 불허 | 둘 다 불허 |
-| 성능 | 빠름 | 느림 (락이 너무 큼) | 빠름 (필요한 부분만 락) |
-| 실무 선택 | 단일 스레드 환경 | 거의 안 씀 (레거시) | 멀티 스레드 환경 |
-
-**비유**: `Hashtable`은 "화장실이 하나뿐인 건물"이에요. 한 사람이 쓰는 동안 전체 건물 문을 다 잠가버려요(메서드 전체 동기화). `ConcurrentHashMap`은 "층마다 화장실이 따로 있는 건물"이에요. 필요한 부분만 잠그니까 훨씬 효율적이죠.
+`ArrayList vs LinkedList`(조회 vs 삽입/삭제 트레이드오프), `HashMap`이 `hashCode()`로 평균 O(1) 조회를 해내는 원리, `HashMap vs Hashtable vs ConcurrentHashMap`, 그리고 `Set`/`Map` 전체 계열(`LinkedHashSet`, `TreeSet`, `LinkedHashMap`, `TreeMap`), `Iterator`의 fail-fast, `Comparable vs Comparator`까지 컬렉션 프레임워크 전반의 자세한 내용은 [[컬렉션]]에서 깊게 다뤄요.
 
 ---
 
@@ -326,8 +275,7 @@ Race Condition, Deadlock, Thread Pool 같은 동시성 문제는 [[동시성]]�
 | String 불변성 | 공유(재사용)와 안전성을 위해 일부러 불변으로 설계 |
 | StringBuilder | 문자열을 자주 바꿀 땐 이걸 써야 성능 손해가 없음 |
 | 제네릭 | 컴파일 타임에 타입 실수를 미리 잡아줌 |
-| ArrayList vs LinkedList | 조회는 ArrayList, 삽입/삭제는 LinkedList |
-| HashMap | hashCode로 버킷을 찾아가서 평균 O(1) 조회 |
+| 컬렉션 프레임워크 | List/Set/Map 세부 비교와 Iterator, Comparable/Comparator는 [[컬렉션]] 참고 |
 | Checked vs Unchecked | 외부 요인(Checked) vs 개발자 실수(Unchecked) |
 | static | 인스턴스가 아니라 클래스 전체가 공유 |
 
@@ -343,12 +291,6 @@ A. String은 불변이라 `+=` 할 때마다 새 객체가 계속 생기지만, 
 
 ### Q. 제네릭의 타입 소거란?
 A. 제네릭 타입 정보는 컴파일할 때만 체크되고, 컴파일된 바이트코드에는 남지 않는다는 것. 제네릭 도입 이전 코드와의 호환성을 위한 설계다.
-
-### Q. ArrayList와 LinkedList 중 조회가 잦을 땐 어떤 걸 써야 하나?
-A. ArrayList. 배열 기반이라 인덱스로 바로 접근(O(1))할 수 있는 반면, LinkedList는 앞에서부터 순서대로 찾아가야 해서(O(n)) 조회가 느리다.
-
-### Q. HashMap이 key를 빠르게 찾는 원리는?
-A. key의 `hashCode()`로 저장할 버킷 번호를 계산해두기 때문에, 조회할 때도 같은 계산으로 바로 그 버킷을 찾아갈 수 있어 평균 O(1)이다.
 
 ### Q. Checked Exception과 Unchecked Exception의 차이는?
 A. Checked는 컴파일러가 처리(try-catch나 throws)를 강제하는, 외부 요인으로 발생할 수 있는 예외이고, Unchecked는 처리를 강제하지 않는, 주로 개발자 실수로 발생하는 예외다.

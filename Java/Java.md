@@ -1,6 +1,6 @@
 #CS #Java #면접
 
-관련: [[OOP]] · [[JVM]] · [[GC]] · [[동시성]] · [[가상 스레드]]
+관련: [[OOP]] · [[JVM]] · [[GC]] · [[동시성]] · [[가상 스레드]] · [[예외 처리]]
 
 Java 언어 자체의 문법/기능에 대한 정리예요. OOP 개념은 [[OOP]], 메모리/실행 구조는 [[JVM]]과 [[GC]]에서 다뤄요.
 
@@ -179,6 +179,8 @@ try (FileInputStream fis = new FileInputStream("data.txt")) {
     e.printStackTrace();
 } // 블록이 끝나면 fis.close()가 자동으로 호출됨! finally도 필요 없음
 ```
+
+Error를 왜 catch하면 안 되는지, 실무에서 Checked보다 Unchecked Exception을 선호하는 이유, 커스텀 예외 설계, 예외 체이닝 같은 더 깊은 내용은 [[예외 처리]]에서 다뤄요.
 
 ### final vs finally vs finalize — 이름 비슷 3형제
 

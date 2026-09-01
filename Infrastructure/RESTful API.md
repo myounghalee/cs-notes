@@ -1,6 +1,6 @@
 #CS #Infrastructure #면접
 
-관련: [[../Spring/Spring|Spring]] · [[../Spring/서블릿|서블릿]] · [[../Fundamentals/인증과 인가|인증과 인가]] · [[../Java/네트워크 프로그래밍|네트워크 프로그래밍]]
+관련: [[../Spring/Spring|Spring]] · [[../Spring/서블릿|서블릿]] · [[../Spring/전역 예외 처리|전역 예외 처리]] · [[../Fundamentals/인증과 인가|인증과 인가]] · [[../Java/네트워크 프로그래밍|네트워크 프로그래밍]]
 
 ## 목차
 - [[#REST란 무엇인가?]]

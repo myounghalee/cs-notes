@@ -1,6 +1,6 @@
 #CS #Spring #면접
 
-관련: [[스프링 컨테이너]] · [[서블릿]] · [[필터와 인터셉터]] · [[Spring Batch]] · [[AOP와 빈 순환참조]] · [[JPA와 영속성 컨텍스트]] · [[../Infrastructure/RESTful API|RESTful API]] · [[../Java/SOLID|SOLID]] · [[../Java/MVC|MVC]] · [[../Database/트랜잭션|트랜잭션]]
+관련: [[스프링 컨테이너]] · [[서블릿]] · [[필터와 인터셉터]] · [[Spring Batch]] · [[AOP와 빈 순환참조]] · [[JPA와 영속성 컨텍스트]] · [[전역 예외 처리]] · [[../Infrastructure/RESTful API|RESTful API]] · [[../Java/SOLID|SOLID]] · [[../Java/MVC|MVC]] · [[../Database/트랜잭션|트랜잭션]]
 
 ## 목차
 - [[#Spring은 왜 쓸까?]]

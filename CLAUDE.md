@@ -8,9 +8,10 @@
 
 ## 폴더 구조
 
-- **주제별 폴더**로 분류하고, **폴더명은 영어로 통일**한다. 예: `Java/`, `Spring/`, `Database/`, `AI/`, `Infrastructure/`, `Operating System/`, `Git/`, `Software Engineering/`, `Algorithms/`, `Data Structures/`.
+- **주제별 폴더**로 분류하고, **폴더명은 영어로 통일**한다. 예: `Java/`, `Spring/`, `Database/`, `AI/`, `Infrastructure/`, `Fundamentals/`, `Software Engineering/`, `Algorithms/`, `Data Structures/`.
   - 폴더 안 노트 파일명과 본문 내용은 기존처럼 한글로 작성한다 — 영어 통일은 폴더명에만 적용(2026-08-30 확정).
   - 네트워크(통신/프로토콜)와 인프라(미들웨어/분산 시스템 컴포넌트)처럼 경계가 모호한 주제는 억지로 나누지 않고 하나의 폴더(`Infrastructure/`)로 합친다.
+  - 특정 기술 스택에 매이지 않는 범용 CS 이론(운영체제, Git, 보안 이론 등)은 `Fundamentals/` 폴더 하나에 모은다 — 매번 주제마다 얇은 폴더를 새로 만들지 않기 위함(2026-09-01 확정, 기존 `Operating System/`·`Git/` 폴더를 통합).
 - 새 주제 폴더를 만들어야 할 때는 만들기 전에 사용자에게 폴더명을 확인한다.
 - 한 폴더 안에서도 특정 하위 주제가 방대해지면 **별도 파일로 분리**한다. 상위 문서에는 간단히 언급 + `[[링크]]`만 남기고, 상세 내용은 분리된 문서에 담는다.
   - 예: `Java/JVM.md`는 GC를 간단히만 언급하고, `Java/GC.md`에 상세 내용을 담음.

@@ -1,6 +1,6 @@
 #CS #Infrastructure #면접
 
-관련: [[../Spring/Spring|Spring]] · [[../Spring/서블릿|서블릿]]
+관련: [[../Spring/Spring|Spring]] · [[../Spring/서블릿|서블릿]] · [[../Fundamentals/인증과 인가|인증과 인가]]
 
 ## 목차
 - [[#REST란 무엇인가?]]

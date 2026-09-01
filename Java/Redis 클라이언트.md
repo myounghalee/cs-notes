@@ -1,6 +1,6 @@
 #CS #Java #면접
 
-관련: [[Java]] · [[동시성]] · [[../Database/동시성 이슈와 락|동시성 이슈와 락]]
+관련: [[Java]] · [[동시성]] · [[Netty]] · [[../Database/동시성 이슈와 락|동시성 이슈와 락]]
 
 ## 목차
 - [[#Redis 클라이언트란?]]
@@ -39,7 +39,7 @@ try (Jedis jedis = jedisPool.getResource()) { // 커넥션 풀에서 하나를 �
 
 ## Lettuce — 비동기/논블로킹, Spring Boot의 기본 선택
 
-**Lettuce**는 Netty(비동기 네트워킹 프레임워크) 기반으로 만들어진 클라이언트예요. **비동기(Async)/논블로킹(Non-blocking)** 방식을 지원하고, **커넥션 하나로 여러 스레드가 동시에 안전하게 사용**할 수 있어요.
+**Lettuce**는 [[Netty]](비동기 네트워킹 프레임워크) 기반으로 만들어진 클라이언트예요. **비동기(Async)/논블로킹(Non-blocking)** 방식을 지원하고, **커넥션 하나로 여러 스레드가 동시에 안전하게 사용**할 수 있어요.
 
 ```java
 RedisAsyncCommands<String, String> commands = connection.async();

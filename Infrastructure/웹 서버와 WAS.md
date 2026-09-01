@@ -1,6 +1,6 @@
 #CS #Infrastructure #면접
 
-관련: [[../Spring/서블릿|서블릿]] · [[RESTful API]] · [[../Fundamentals/프로세스와 스레드|프로세스와 스레드]]
+관련: [[../Spring/서블릿|서블릿]] · [[RESTful API]] · [[../Fundamentals/프로세스와 스레드|프로세스와 스레드]] · [[시스템 설계 기초]]
 
 ## 목차
 - [[#웹 서버와 WAS — 뭐가 다를까?]]

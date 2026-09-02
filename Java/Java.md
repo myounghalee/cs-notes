@@ -142,20 +142,6 @@ graph TD
 
 ## 예외 처리 (Exception)
 
-```mermaid
-graph TD
-    Throwable --> Error["Error<br/>(시스템 레벨, 복구 불가)"]
-    Throwable --> Exception
-    Exception --> Checked["Checked Exception<br/>(컴파일러가 처리 강제)"]
-    Exception --> Runtime["RuntimeException<br/>= Unchecked Exception<br/>(처리 강제 안 함)"]
-```
-
-- **Checked Exception** (예: `IOException`): 컴파일러가 "이거 처리 안 하면 컴파일 안 시켜줄게!"라고 강제해요. 파일이 없다거나 네트워크가 끊기는 등, **외부 요인으로 발생할 수 있고 호출자가 대비할 수 있는** 상황에 씁니다.
-  ```java
-  void readFile() throws IOException { ... } // 반드시 throws 선언하거나 try-catch로 처리해야 컴파일됨
-  ```
-- **Unchecked Exception** (예: `NullPointerException`, `ArrayIndexOutOfBoundsException`): 컴파일러가 처리를 강제하지 않아요. 대부분 **개발자의 실수(버그)** 로 발생하기 때문에, 애초에 예방하는 게 맞는 상황이에요.
-
 `finally` 블록은 예외가 나든 안 나든 **무조건 실행**돼요. 그래서 파일이나 DB 연결처럼 반드시 닫아야 하는 자원을 정리할 때 써요.
 
 ```java
@@ -180,7 +166,7 @@ try (FileInputStream fis = new FileInputStream("data.txt")) {
 } // 블록이 끝나면 fis.close()가 자동으로 호출됨! finally도 필요 없음
 ```
 
-Error를 왜 catch하면 안 되는지, 실무에서 Checked보다 Unchecked Exception을 선호하는 이유, 커스텀 예외 설계, 예외 체이닝 같은 더 깊은 내용은 [[예외 처리]]에서 다뤄요.
+`Throwable` 계층 구조(Error/Checked/Unchecked), 자바의 대표적인 예외 종류, Error를 왜 catch하면 안 되는지, 실무에서 Checked보다 Unchecked Exception을 선호하는 이유, 커스텀 예외 설계, 예외 체이닝 같은 내용은 [[예외 처리]]에서 자세히 다뤄요.
 
 ### final vs finally vs finalize — 이름 비슷 3형제
 
@@ -278,7 +264,6 @@ Race Condition, Deadlock, Thread Pool 같은 동시성 문제는 [[동시성]]�
 | StringBuilder | 문자열을 자주 바꿀 땐 이걸 써야 성능 손해가 없음 |
 | 제네릭 | 컴파일 타임에 타입 실수를 미리 잡아줌 |
 | 컬렉션 프레임워크 | List/Set/Map 세부 비교와 Iterator, Comparable/Comparator는 [[컬렉션]] 참고 |
-| Checked vs Unchecked | 외부 요인(Checked) vs 개발자 실수(Unchecked) |
 | static | 인스턴스가 아니라 클래스 전체가 공유 |
 
 ---
@@ -294,5 +279,3 @@ A. String은 불변이라 `+=` 할 때마다 새 객체가 계속 생기지만, 
 ### Q. 제네릭의 타입 소거란?
 A. 제네릭 타입 정보는 컴파일할 때만 체크되고, 컴파일된 바이트코드에는 남지 않는다는 것. 제네릭 도입 이전 코드와의 호환성을 위한 설계다.
 
-### Q. Checked Exception과 Unchecked Exception의 차이는?
-A. Checked는 컴파일러가 처리(try-catch나 throws)를 강제하는, 외부 요인으로 발생할 수 있는 예외이고, Unchecked는 처리를 강제하지 않는, 주로 개발자 실수로 발생하는 예외다.
